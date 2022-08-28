@@ -4,20 +4,20 @@ import styled, { ThemeProvider } from 'styled-components';
 
 import Global from './assets/Global';
 import { ThemeContext } from './context/ThemeContext';
+import FormPage from './pages/FormPage';
 import Home from './pages/Home';
 
 const RootContainer = styled.main`
     background-color: ${props => props.theme.body};
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
 `
 
 const Container = styled.article`
-    max-width: 1366px;
-    min-height: 100vh;
-    margin: 0 auto;
+    width: 100%;
+    height: 100vh;
     background-color: ${props => props.theme.body};
-    display: flex;
-    justify-content: center;
-    align-items: center;
 `
 
 const App = () => {
@@ -30,7 +30,7 @@ const App = () => {
                 <RootContainer>
                     <Container>
                         <Routes>
-                            <Route path = '/' exact element = { <Home /> } />    
+                            <Route path = '/' exact element = { <FormPage /> } />    
                         </Routes>    
                     </Container>
                 </RootContainer>

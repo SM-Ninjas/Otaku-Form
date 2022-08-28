@@ -5,6 +5,7 @@ export default createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    overflow: hidden;
     color: ${props => props.theme.text};
     font-family: 'Exo 2', sans-serif;
   }
@@ -52,7 +53,7 @@ export default createGlobalStyle`
   
   @supports (scrollbar-color: red blue) {
     *{
-        scrollbar-color: ${props => props.theme.text} transparent;
+        scrollbar-color: transparent transparent;
         scrollbar-width: thin;
     }
     .mobile {
