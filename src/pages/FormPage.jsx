@@ -5,7 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import WallImg from '../assets/images/wall.png';
 import Titan from '../assets/images/titan.png';
 
-import { postFormFailure, postFormStart, postFormSuccess } from '../redux/userSlice';
+import { postFormFailure, postFormStart } from '../redux/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../components/Loading';
 // import { receiveRequest } from '../controller/mail.controller';

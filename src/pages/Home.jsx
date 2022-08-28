@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components';
 import toast, { Toaster } from 'react-hot-toast';
 
-import WallImg from '../assets/images/wall.png';
-import Titan from '../assets/images/titan.png';
 import Bg from '../assets/videos/bg.mp4';
 
-import { postFormFailure, postFormStart, postFormSuccess } from '../redux/userSlice';
+import { postFormFailure, postFormStart } from '../redux/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../components/Loading';
 // import { receiveRequest } from '../controller/mail.controller';
@@ -20,16 +18,7 @@ const Container = styled.section`
     overflow: hidden;
     position: relative;
 `
-const Wall = styled.img`
-    width: 100%;
-    height: auto;
-    z-index: 80;
 
-    @media (max-width: 768px) {
-        object-fit: cover;
-        width: 100%;
-    }
-`
 const Form = styled.form`
     display: flex;
     flex-direction: column;
@@ -70,11 +59,7 @@ const Form = styled.form`
         width: 100%;
     }
 `
-const Colossol = styled.img`
-    position: absolute;
-    top: ${props => props.top};
-    transition: all 0.5s ease-in-out;
-`
+
 const Overlay = styled.div`
     position: absolute;
     top: 0;
@@ -111,7 +96,7 @@ const Home = () => {
         graduated: '',
         qualification: '',
     })
-    const [top, setTop] = useState('20px');
+    // const [top, setTop] = useState('20px');
     // const [fields, setFields] = useState({
     //     name: true,
     //     email: true,
@@ -131,52 +116,52 @@ const Home = () => {
         button: true,
     }
 
-    useEffect(() => {
-        const titanAppear = () => {
-            if(input.name !== "") {
-                setTop('-30px')
+    // useEffect(() => {
+    //     const titanAppear = () => {
+    //         if(input.name !== "") {
+    //             setTop('-30px')
 
-                if(input.email !== "") {
-                    setTop('-40px')
+    //             if(input.email !== "") {
+    //                 setTop('-40px')
 
-                    if(input.address !== "") {
-                        setTop('-50px')
+    //                 if(input.address !== "") {
+    //                     setTop('-50px')
 
-                        if(input.phone !== "") {
-                            setTop('-60px')
+    //                     if(input.phone !== "") {
+    //                         setTop('-60px')
 
-                            if(input.graduated !== "") {
-                                setTop('-70px')
+    //                         if(input.graduated !== "") {
+    //                             setTop('-70px')
                                 
-                                if(input.qualification !== "") {
-                                    setTop('-80px')
-                                }
-                                else {
-                                    setTop('-70px')
-                                }
-                            }
-                            else {
-                                setTop('-60px')
-                            }
-                        }
-                        else {
-                            setTop('-50px')
-                        }
-                    }
-                    else {
-                        setTop('-40px')
-                    }
-                }
-                else {
-                    setTop('-30px')
-                }
-            }
-            else {
-                setTop('10px')
-            }
-        }
-        titanAppear();
-    }, [input])
+    //                             if(input.qualification !== "") {
+    //                                 setTop('-80px')
+    //                             }
+    //                             else {
+    //                                 setTop('-70px')
+    //                             }
+    //                         }
+    //                         else {
+    //                             setTop('-60px')
+    //                         }
+    //                     }
+    //                     else {
+    //                         setTop('-50px')
+    //                     }
+    //                 }
+    //                 else {
+    //                     setTop('-40px')
+    //                 }
+    //             }
+    //             else {
+    //                 setTop('-30px')
+    //             }
+    //         }
+    //         else {
+    //             setTop('10px')
+    //         }
+    //     }
+    //     titanAppear();
+    // }, [input])
 
     // useEffect(() => {
     //     const fieldsAppear = () => {

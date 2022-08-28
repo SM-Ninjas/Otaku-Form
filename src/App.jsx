@@ -5,7 +5,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import Global from './assets/Global';
 import { ThemeContext } from './context/ThemeContext';
 import FormPage from './pages/FormPage';
-import Home from './pages/Home';
+// import Home from './pages/Home';
 
 const RootContainer = styled.main`
     background-color: ${props => props.theme.body};
