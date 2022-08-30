@@ -165,8 +165,7 @@ const FormPage = () => {
         titanAppear();
     }, [input])
 
-    // const { isFetching } = useSelector(state => state.user);
-    const isFetching = useSelector(state => state.user.isFetching);
+    const { isFetching } = useSelector(state => state.user.isFetching);
     // const loading = true;
 
     const sendEmail = () => {
@@ -178,30 +177,35 @@ const FormPage = () => {
             user_graduated: input.graduated,
             user_qualification: input.qualification,
         })
+            .then((result) => {
+                toast.success('Form submitted successfully!')
+                console.log(result.text);
+                setInput({
+                    name: '',
+                    email: '',
+                    address: '',
+                    phone: '',
+                    graduated: '',
+                    qualification: '',
+                })
+            }, (error) => {
+                toast.error(error.text);
+            },
+        );
     };
 
     const dispatch = useDispatch();
     const handleSubmit = async(e) => {
         e.preventDefault();
-
         dispatch(postFormStart());
-
+        
         try {
             sendEmail();
             dispatch(postFormSuccess());
-            toast.success('Form submitted successfully');
-            setInput({
-                name: '',
-                email: '',
-                address: '',
-                phone: '',
-                graduated: '',
-                qualification: '',
-            })
         }
         catch(err) {
             dispatch(postFormFailure(err));
-            toast.error('Please fill the form with valid informations', )
+            toast.error('Please fill all the fields with valid informations', )
         }
     }
 
