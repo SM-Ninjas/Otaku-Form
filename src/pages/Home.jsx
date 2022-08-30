@@ -7,7 +7,6 @@ import Bg from '../assets/videos/bg.mp4';
 import { postFormFailure, postFormStart } from '../redux/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../components/Loading';
-// import { receiveRequest } from '../controller/mail.controller';
 
 const Container = styled.section`
     width: 100vw;

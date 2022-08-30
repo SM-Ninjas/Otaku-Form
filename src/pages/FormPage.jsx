@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import styled from 'styled-components';
 import toast, { Toaster } from 'react-hot-toast';
+
+import emailjs from '@emailjs/browser';
 
 import WallImg from '../assets/images/wall.png';
 import Titan from '../assets/images/titan.png';
 
-import { postFormFailure, postFormStart } from '../redux/userSlice';
+import { postFormFailure, postFormStart, postFormSuccess } from '../redux/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../components/Loading';
-// import { receiveRequest } from '../controller/mail.controller';
 
 const Container = styled.section`
     width: 100%;
@@ -96,6 +97,7 @@ const Fields = styled.div`
 `
 
 const FormPage = () => {
+    const formRef = useRef();
     const [input, setInput] = useState({
         name: '',
         email: '',
@@ -163,23 +165,43 @@ const FormPage = () => {
         titanAppear();
     }, [input])
 
-    const { isFetching } = useSelector(state => state.user);
+    // const { isFetching } = useSelector(state => state.user);
+    const isFetching = useSelector(state => state.user.isFetching);
     // const loading = true;
+
+    const sendEmail = () => {
+        emailjs.send('service_6qwqfkx', 'template_5q9w6e7', formRef.current, 'sZXKe8nzDj5avX1Bp', {
+            user_name: input.name,
+            user_email: input.email,
+            user_address: input.address,
+            user_phone: input.phone,
+            user_graduated: input.graduated,
+            user_qualification: input.qualification,
+        })
+    };
 
     const dispatch = useDispatch();
     const handleSubmit = async(e) => {
         e.preventDefault();
-        
-        
-        dispatch(postFormStart());
-        
-        try {
 
-            toast.success('Form submitted successfully!')
+        dispatch(postFormStart());
+
+        try {
+            sendEmail();
+            dispatch(postFormSuccess());
+            toast.success('Form submitted successfully');
+            setInput({
+                name: '',
+                email: '',
+                address: '',
+                phone: '',
+                graduated: '',
+                qualification: '',
+            })
         }
         catch(err) {
             dispatch(postFormFailure(err));
-            toast.error('Something went wrong. Please try again later.', )
+            toast.error('Please fill the form with valid informations', )
         }
     }
 
@@ -188,12 +210,13 @@ const FormPage = () => {
             <Colossol src={Titan} alt='Collosal' top={top}/>
             <Wall src={WallImg} alt="titan"/>
             
-            <Form className='no-scroll w-11/12 md:w-3/4 lg:w-1/3'>
+            <Form className='no-scroll w-11/12 md:w-3/4 lg:w-1/3' ref={formRef} onSubmit={handleSubmit}>
                 <Fields opacity={fields.name}>
                     <label>Name</label>
                     <input 
                         type="text" 
                         value={input.name} 
+                        name='user_name'
                         placeholder="Your Name"
                         onChange={(e) => setInput({...input, name: e.target.value})}
                     />
@@ -203,6 +226,7 @@ const FormPage = () => {
                     <input 
                         type="mail" 
                         value={input.email}
+                        name='user_email'
                         placeholder="youremail@gmail.com" 
                         onChange={(e) => setInput({...input, email: e.target.value})}
                     />
@@ -214,6 +238,7 @@ const FormPage = () => {
                         maxLength={10}
                         pattern="[0-9]"
                         value={input.phone}
+                        name='user_phone'
                         placeholder="98XXXXXXXX" 
                         onChange={(e) => setInput({...input, phone: e.target.value})}
                     />
@@ -224,6 +249,7 @@ const FormPage = () => {
                         type="text" 
                         value={input.address} 
                         placeholder="Street, City"
+                        name='user_address'
                         onChange={(e) => setInput({...input, address: e.target.value})}
                     />
                 </Fields>
@@ -233,6 +259,7 @@ const FormPage = () => {
                         type="number" 
                         value={input.graduated}
                         placeholder="2021" 
+                        name='user_graduated'
                         onChange={(e) => setInput({...input, graduated: e.target.value})}
                     />
                 </Fields>
@@ -242,10 +269,11 @@ const FormPage = () => {
                         type="text" 
                         value={input.qualification}
                         placeholder="Degree in level" 
+                        name='user_qualification'
                         onChange={(e) => setInput({...input, qualification: e.target.value})}
                     />
                 </Fields>
-                <button className='w-auto h-max px-4 py-2 bg-white text-black rounded-sm mt-6' onClick={handleSubmit}>Submit</button>
+                <button className='w-auto h-max px-4 py-2 bg-white text-black rounded-sm mt-6'>Submit</button>
             </Form>
 
             <Toaster />
