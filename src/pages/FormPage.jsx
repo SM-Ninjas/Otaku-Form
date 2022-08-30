@@ -13,7 +13,6 @@ import Sad from '../assets/images/sad.gif';
 import { postFormFailure, postFormStart, postFormSuccess } from '../redux/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../components/Loading';
-import CustomToast from '../components/CustomToast';
 
 const Container = styled.section`
     width: 100%;
@@ -33,6 +32,10 @@ const Wall = styled.img`
     @media (max-width: 768px) {
         object-fit: cover;
         width: 100%;
+    }
+    @media (min-width: 495px) {
+        object-fit: cover;
+        transform: scale(2);
     }
 `
 const Form = styled.form`
