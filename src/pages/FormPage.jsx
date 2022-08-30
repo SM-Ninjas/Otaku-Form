@@ -7,9 +7,13 @@ import emailjs from '@emailjs/browser';
 import WallImg from '../assets/images/wall.png';
 import Titan from '../assets/images/titan.png';
 
+import Happy from '../assets/images/happy.gif';
+import Sad from '../assets/images/sad.gif';
+
 import { postFormFailure, postFormStart, postFormSuccess } from '../redux/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../components/Loading';
+import CustomToast from '../components/CustomToast';
 
 const Container = styled.section`
     width: 100%;
@@ -172,7 +176,43 @@ const FormPage = () => {
     const sendEmail = () => {
         emailjs.sendForm('service_6qwqfkx', 'template_5q9w6e7', formRef.current, 'sZXKe8nzDj5avX1Bp')
             .then((result) => {
-                toast.success('Form submitted successfully!')
+                
+                toast.custom((t) => (
+                    <div
+                        className={`${
+                        t.visible ? 'animate-enter' : 'animate-leave'
+                        } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+                    >
+                        <div className="flex-1 w-0 p-4">
+                        <div className="flex items-start">
+                            <div className="flex-shrink-0 pt-0.5">
+                            <img
+                                className="h-10 w-10 rounded-full"
+                                src={Happy}
+                                alt="success"
+                            />
+                            </div>
+                            <div className="ml-3 flex-1">
+                            <p className="text-sm font-medium text-gray-900">
+                                Successfull
+                            </p>
+                            <p className="mt-1 text-sm text-gray-500">
+                                Thank you for submitting the form
+                            </p>
+                            </div>
+                        </div>
+                        </div>
+                        <div className="flex border-l border-gray-200">
+                        <button
+                            onClick={() => toast.dismiss(t.id)}
+                            className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-red-600 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-500"
+                        >
+                            Close
+                        </button>
+                        </div>
+                    </div>
+                ))
+
                 console.log(result.text);
                 setInput({
                     name: '',
@@ -183,8 +223,43 @@ const FormPage = () => {
                     qualification: '',
                 })
                 setLoading(false);
+
             }, (error) => {
-                toast.error(error.text);
+                toast.custom((t) => (
+                    <div
+                        className={`${
+                        t.visible ? 'animate-enter' : 'animate-leave'
+                        } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+                    >
+                        <div className="flex-1 w-0 p-4">
+                        <div className="flex items-start">
+                            <div className="flex-shrink-0 pt-0.5">
+                            <img
+                                className="h-10 w-10 rounded-full"
+                                src={Sad}
+                                alt="success"
+                            />
+                            </div>
+                            <div className="ml-3 flex-1">
+                            <p className="text-sm font-medium text-gray-900">
+                                Something went wrong
+                            </p>
+                            <p className="mt-1 text-sm text-gray-500">
+                                Please try again later.
+                            </p>
+                            </div>
+                        </div>
+                        </div>
+                        <div className="flex border-l border-gray-200">
+                        <button
+                            onClick={() => toast.dismiss(t.id)}
+                            className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-red-600 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-500"
+                        >
+                            Close
+                        </button>
+                        </div>
+                    </div>
+                ))
                 setLoading(false);
             },
         );
@@ -196,7 +271,41 @@ const FormPage = () => {
         setLoading(true);
 
         if(input.name === "" || input.email === "" || input.address === "" || input.phone === "" || input.graduated === "" || input.qualification === "") {
-            toast.error('Please fill all the fields');
+            toast.custom((t) => (
+                <div
+                    className={`${
+                    t.visible ? 'animate-enter' : 'animate-leave'
+                    } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+                >
+                    <div className="flex-1 w-0 p-4">
+                    <div className="flex items-start">
+                        <div className="flex-shrink-0 pt-0.5">
+                        <img
+                            className="h-10 w-10 rounded-full"
+                            src={Sad}
+                            alt="success"
+                        />
+                        </div>
+                        <div className="ml-3 flex-1">
+                        <p className="text-sm font-medium text-gray-900">
+                            Did you fill all the fields?
+                        </p>
+                        <p className="mt-1 text-sm text-gray-500">
+                            Please fill all the fields.
+                        </p>
+                        </div>
+                    </div>
+                    </div>
+                    <div className="flex border-l border-gray-200">
+                    <button
+                        onClick={() => toast.dismiss(t.id)}
+                        className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-red-600 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-500"
+                    >
+                        Close
+                    </button>
+                    </div>
+                </div>
+            ))
             setLoading(false);
         }
         else {
@@ -209,7 +318,41 @@ const FormPage = () => {
             catch(err) {
                 dispatch(postFormFailure());
                 console.log(err);
-                toast.error('Something went wrong')
+                toast.custom((t) => (
+                    <div
+                        className={`${
+                        t.visible ? 'animate-enter' : 'animate-leave'
+                        } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+                    >
+                        <div className="flex-1 w-0 p-4">
+                        <div className="flex items-start">
+                            <div className="flex-shrink-0 pt-0.5">
+                            <img
+                                className="h-10 w-10 rounded-full"
+                                src={Sad}
+                                alt="success"
+                            />
+                            </div>
+                            <div className="ml-3 flex-1">
+                            <p className="text-sm font-medium text-gray-900">
+                                Something went wrong
+                            </p>
+                            <p className="mt-1 text-sm text-gray-500">
+                                Please try again later.
+                            </p>
+                            </div>
+                        </div>
+                        </div>
+                        <div className="flex border-l border-gray-200">
+                        <button
+                            onClick={() => toast.dismiss(t.id)}
+                            className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-red-600 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-500"
+                        >
+                            Close
+                        </button>
+                        </div>
+                    </div>
+                ))
             }
         }
     }
