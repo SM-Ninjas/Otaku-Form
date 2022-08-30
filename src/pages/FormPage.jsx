@@ -165,18 +165,12 @@ const FormPage = () => {
         titanAppear();
     }, [input])
 
-    const { isFetching } = useSelector(state => state.user.isFetching);
-    // const loading = true;
+    const { isFetching } = useSelector(state => state.user);
+    
+    const [loading, setLoading] = useState(false);
 
     const sendEmail = () => {
-        emailjs.send('service_6qwqfkx', 'template_5q9w6e7', formRef.current, 'sZXKe8nzDj5avX1Bp', {
-            user_name: input.name,
-            user_email: input.email,
-            user_address: input.address,
-            user_phone: input.phone,
-            user_graduated: input.graduated,
-            user_qualification: input.qualification,
-        })
+        emailjs.sendForm('service_6qwqfkx', 'template_5q9w6e7', formRef.current, 'sZXKe8nzDj5avX1Bp')
             .then((result) => {
                 toast.success('Form submitted successfully!')
                 console.log(result.text);
@@ -188,8 +182,10 @@ const FormPage = () => {
                     graduated: '',
                     qualification: '',
                 })
+                setLoading(false);
             }, (error) => {
                 toast.error(error.text);
+                setLoading(false);
             },
         );
     };
@@ -197,15 +193,24 @@ const FormPage = () => {
     const dispatch = useDispatch();
     const handleSubmit = async(e) => {
         e.preventDefault();
-        dispatch(postFormStart());
-        
-        try {
-            sendEmail();
-            dispatch(postFormSuccess());
+        setLoading(true);
+
+        if(input.name === "" || input.email === "" || input.address === "" || input.phone === "" || input.graduated === "" || input.qualification === "") {
+            toast.error('Please fill all the fields');
+            setLoading(false);
         }
-        catch(err) {
-            dispatch(postFormFailure(err));
-            toast.error('Please fill all the fields with valid informations', )
+        else {
+            dispatch(postFormStart());
+            
+            try {
+                sendEmail();
+                dispatch(postFormSuccess(input));
+            }
+            catch(err) {
+                dispatch(postFormFailure());
+                console.log(err);
+                toast.error('Something went wrong')
+            }
         }
     }
 
@@ -277,13 +282,15 @@ const FormPage = () => {
                         onChange={(e) => setInput({...input, qualification: e.target.value})}
                     />
                 </Fields>
-                <button className='w-auto h-max px-4 py-2 bg-white text-black rounded-sm mt-6'>Submit</button>
+                <button className='w-auto h-max px-4 py-2 bg-white text-black rounded-sm mt-6 disabled:opacity-0' disabled={loading}>Submit</button>
             </Form>
 
             <Toaster />
             {
-                isFetching &&
+                isFetching || loading ?
                 <Loading /> 
+                :
+                null
             }
         </Container>
     )
