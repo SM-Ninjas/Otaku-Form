@@ -33,7 +33,7 @@ const Wall = styled.img`
         object-fit: cover;
         width: 100%;
     }
-    @media (min-width: 495px) {
+    @media (max-width: 495px) {
         object-fit: cover;
         transform: scale(2);
     }
@@ -90,7 +90,8 @@ const Colossol = styled.img`
         top: 0;
     }
     @media (max-width: 495px){
-        top: 20px;
+        top: 40px;
+        transform: scale(1.5);
     }
 `
 const Fields = styled.div`
