@@ -21,7 +21,7 @@ const Container = styled.section`
     flex-direction: column;
     align-items: center;
     row-gap: 2rem;
-    overflow: hidden;
+    
 `
 const Wall = styled.img`
     width: 100%;
@@ -88,6 +88,7 @@ const Colossol = styled.img`
 
     @media (max-width: 768px){
         top: 0;
+        display: none;
     }
     @media (max-width: 495px){
         top: 40px;

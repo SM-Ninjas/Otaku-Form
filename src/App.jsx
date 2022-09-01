@@ -9,8 +9,7 @@ import FormPage from './pages/FormPage';
 
 const RootContainer = styled.main`
     background-color: ${props => props.theme.body};
-    height: 100vh;
-    width: 100vw;
+    max-height: 100vh;
     overflow: hidden;
 `
 
