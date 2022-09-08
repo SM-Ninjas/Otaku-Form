@@ -114,6 +114,7 @@ const FormPage = () => {
         phone: '',
         graduated: '',
         qualification: '',
+        qunatity: '',
     })
     const [top, setTop] = useState('20px');
 
@@ -124,6 +125,7 @@ const FormPage = () => {
         phone: true,
         graduated: true,
         qualification: true,
+        qunatity: true,
         button: true,
     }
 
@@ -275,7 +277,7 @@ const FormPage = () => {
         e.preventDefault();
         setLoading(true);
 
-        if(input.name === "" || input.email === "" || input.address === "" || input.phone === "" || input.graduated === "" || input.qualification === "") {
+        if(input.name === "" || input.email === "" || input.address === "" || input.phone === "" || input.graduated === "" || input.qualification === "" || input.qunatity === "") {
             toast.custom((t) => (
                 <div
                     className={`${
@@ -286,9 +288,9 @@ const FormPage = () => {
                     <div className="flex items-start">
                         <div className="flex-shrink-0 pt-0.5">
                         <img
-                            className="h-10 w-10 rounded-full"
+                            className="h-10 w-10 rounded-full object-cover"
                             src={Sad}
-                            alt="success"
+                            alt="error"
                         />
                         </div>
                         <div className="ml-3 flex-1">
@@ -308,6 +310,120 @@ const FormPage = () => {
                     >
                         Close
                     </button>
+                    </div>
+                </div>
+            ))
+            setLoading(false);
+        }
+        else if (input.phone.length < 10) {
+            toast.custom((t) => (
+                <div
+                    className={`${
+                        t.visible ? 'animate-enter' : 'animate-leave'
+                        } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+                >
+                    <div className="flex-1 w-0 p-4">
+                        <div className="flex items-start">
+                            <div className="flex-shrink-0 pt-0.5">
+                            <img
+                                className="h-10 w-10 rounded-full object-cover"
+                                src={Sad}
+                                alt="error"
+                            />
+                            </div>
+                            <div className="ml-3 flex-1">
+                            <p className="text-sm font-medium text-gray-900">
+                                Something seems wrong in the phone number?
+                            </p>
+                            <p className="mt-1 text-sm text-gray-500">
+                                Please enter valid phone number.
+                            </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex border-l border-gray-200">
+                        <button
+                            onClick={() => toast.dismiss(t.id)}
+                            className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-red-600 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-500"
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+            ))
+            setLoading(false);
+        }
+        else if (input.graduated < 2009 || input.graduated > 2022) {
+            toast.custom((t) => (
+                <div
+                    className={`${
+                        t.visible ? 'animate-enter' : 'animate-leave'
+                        } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+                >
+                    <div className="flex-1 w-0 p-4">
+                        <div className="flex items-start">
+                            <div className="flex-shrink-0 pt-0.5">
+                            <img
+                                className="h-10 w-10 rounded-full object-cover"
+                                src={Sad}
+                                alt="error"
+                            />
+                            </div>
+                            <div className="ml-3 flex-1">
+                            <p className="text-sm font-medium text-gray-900">
+                                Is that when you graduated?
+                            </p>
+                            <p className="mt-1 text-sm text-gray-500">
+                                Please enter the year you graduated from your +2 levels in AD.
+                            </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex border-l border-gray-200">
+                        <button
+                            onClick={() => toast.dismiss(t.id)}
+                            className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-red-600 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-500"
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+            ))
+            setLoading(false);
+        }
+        else if (input.qunatity < 0) {
+            toast.custom((t) => (
+                <div
+                    className={`${
+                        t.visible ? 'animate-enter' : 'animate-leave'
+                        } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+                >
+                    <div className="flex-1 w-0 p-4">
+                        <div className="flex items-start">
+                            <div className="flex-shrink-0 pt-0.5">
+                            <img
+                                className="h-10 w-10 rounded-full object-cover"
+                                src={Sad}
+                                alt="error"
+                            />
+                            </div>
+                            <div className="ml-3 flex-1">
+                            <p className="text-sm font-medium text-gray-900">
+                                Oee
+                            </p>
+                            <p className="mt-1 text-sm text-gray-500">
+                                Please enter valid quantity seriously.
+                            </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex border-l border-gray-200">
+                        <button
+                            onClick={() => toast.dismiss(t.id)}
+                            className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-red-600 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-500"
+                        >
+                            Close
+                        </button>
                     </div>
                 </div>
             ))
@@ -375,6 +491,8 @@ const FormPage = () => {
                         value={input.name} 
                         name='user_name'
                         placeholder="Your Name"
+                        pattern='[A-Za-z ]{1, 20}'
+                        title='Only alphabets are allowed'
                         onChange={(e) => setInput({...input, name: e.target.value})}
                     />
                 </Fields>
@@ -384,6 +502,7 @@ const FormPage = () => {
                         type="mail" 
                         value={input.email}
                         name='user_email'
+                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Enter valid email address" 
                         placeholder="youremail@gmail.com" 
                         onChange={(e) => setInput({...input, email: e.target.value})}
                     />
@@ -391,9 +510,10 @@ const FormPage = () => {
                 <Fields opacity={fields.phone}>
                     <label>Phone</label>
                     <input 
-                        type="number" 
+                        type="tel" 
                         maxLength={10}
-                        pattern="[0-9]"
+                        pattern="[0-9]{10}"
+                        title='Please enter a valid phone number'
                         value={input.phone}
                         name='user_phone'
                         placeholder="98XXXXXXXX" 
@@ -406,6 +526,8 @@ const FormPage = () => {
                         type="text" 
                         value={input.address} 
                         placeholder="Street, City"
+                        pattern='[A-Za-z ]{1, 20}'
+                        title='Please enter your full address'
                         name='user_address'
                         onChange={(e) => setInput({...input, address: e.target.value})}
                     />
@@ -416,6 +538,8 @@ const FormPage = () => {
                         type="number" 
                         value={input.graduated}
                         placeholder="2021" 
+                        pattern='[0-9]{4}'
+                        title='Please enter a valid year'
                         name='user_graduated'
                         onChange={(e) => setInput({...input, graduated: e.target.value})}
                     />
@@ -425,9 +549,21 @@ const FormPage = () => {
                     <input 
                         type="text" 
                         value={input.qualification}
-                        placeholder="Degree in level" 
+                        placeholder="+2, Bachelors, Masters" 
                         name='user_qualification'
                         onChange={(e) => setInput({...input, qualification: e.target.value})}
+                    />
+                </Fields>
+                <Fields opacity={fields.qunatity}>
+                    <label>Quantity of ticket</label>
+                    <input 
+                        type="number" 
+                        value={input.qunatity}
+                        placeholder="1" 
+                        pattern='[0-9]{1, 2}'
+                        title='Please enter a valid quantity'
+                        name='user_qunatity'
+                        onChange={(e) => setInput({...input, qunatity: e.target.value})}
                     />
                 </Fields>
                 <button className='w-auto h-max px-4 py-2 bg-white text-black rounded-sm mt-6 disabled:opacity-0' disabled={loading}>Submit</button>
